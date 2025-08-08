@@ -48,17 +48,31 @@ from tensorflow.keras.layers import Dense
 from tensorflow.keras import Sequential
 from tensorflow.keras.losses import BinaryCrossentropy
 
-x = np.array([
-    [200,17],
-    [250,21],
-    [120,12],
-    [212,18]
-])
-y = np.array([1, 0, 0, 1])
-model = Sequential([
-    Dense(units=3, activation='sigmoid', input_shape=(2,)),
-    Dense(units=1, activation='sigmoid')
-])
-model.compile(loss=BinaryCrossentropy)
-model.fit(x, y, epochs=100)
-model.predict(x)
+# x = np.array([
+#     [200,17],
+#     [250,21],
+#     [120,12],
+#     [212,18]
+# ])
+# y = np.array([1, 0, 0, 1])
+# model = Sequential([
+#     Dense(units=3, activation='sigmoid', input_shape=(2,)),
+#     Dense(units=1, activation='sigmoid')
+# ])
+# model.compile(loss=BinaryCrossentropy)
+# model.fit(x, y, epochs=100)
+# model.predict(x)
+import tensorflow as tf
+
+w = tf.Variable(3.0)
+x = 1.0
+y = 1.0
+alpha = 0.01
+iterations = 30
+for i in range(iterations):
+    with tf.GradientTape() as tape:
+        fwb = w * x
+        loss = (y-fwb)**2
+    
+    [dJdw] = tf.gradient(loss, [w])
+    w.assign_add(-alpha * dJdw)
